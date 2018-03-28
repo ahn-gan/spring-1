@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--1、引入schema约束-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--2、配置类对象的创建-->
+    <!--id:类的实例化对象名称
+        class:类的全路径-->
+    <!--使用无惨构造创建对象-->
+    <bean id="user" class="com.ahn.ioc.User">
+        <!--使用有参构造注入属性值-->
+        <constructor-arg name="username" value="AHN"></constructor-arg>
+    </bean>
+    <!--使用set方法注入属性
+        property:属性名-->
+    <bean id="book" class="com.ahn.ioc.Book">
+        <property name="bookname" value="论语"></property>
+    </bean>
+
+    <!--使用静态工厂方法创建对象-->
+    <!--class属性值为静态工厂的全路径，factory-method的值为静态方法名-->
+    <bean id="bean2" class="com.ahn.bean.BeanFactory" factory-method="getInstance"></bean>
+
+    <!--注入对象类型
+    1、先配置两个类的创建
+    2、将UserDao作为属性注入到UserService类-->
+    <bean id="userDao" class="com.ahn.ioc.UserDao"></bean>
+    <!--name属性：UserDao在UserService类中的属性名称（由于是类对象，故不能使用value属性）
+        ref属性：UserDao创建的id值-->
+    <bean id="userService" class="com.ahn.ioc.UserService">
+        <property name="userDao" ref="userDao" ></property>
+    </bean>
+
+</beans>
